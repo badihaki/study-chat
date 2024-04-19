@@ -1,11 +1,11 @@
 const { model, Schema } = require("mongoose");
-const Message = require("./MessageModel");
+const { messageSchema } = require("./MessageModel");
 
 const userSchema = new Schema({
     username: String,
     email: String,
     password: String,
-    savedMessages: [Message]
+    savedMessages: [messageSchema]
 })
 
 const User = model("User", userSchema);
