@@ -2,7 +2,9 @@
 
 <form [formGroup]="signupForm" (ngSubmit)="handleSubmit()">
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" formControlName="email" />
+    <span class="hint-{{emailInputActive.toString()}}">Enter a valid and unique email address. This will be ued to log-in.</span>
+    <br />
+    <input type="email" id="email" name="email" formControlName="email" (focus)="setEmailActive(true)" (blur)="setEmailActive(false)" />
     @if (signupForm.get("email")?.touched) {
         @if ( signupForm.get("email")?.hasError("required") || signupForm.get("email")?.hasError("email") ) {
             <br />
@@ -11,7 +13,9 @@
     }
     <br />
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" formControlName="password" />
+    <span class="hint-{{passInputActive.toString()}}">Enter a password that's at least 8 characters in length.</span>
+    <br />
+    <input type="password" id="password" name="password" formControlName="password" (focus)="setPasswordActive(true)" (blur)="setPasswordActive(false)" />
     @if (signupForm.get("password")?.touched) {
         @if ( signupForm.get("password")?.hasError("required") ) {
             <br />
@@ -19,9 +23,34 @@
         }
     }
     <br />
+    <label for="confirmPassword">Password</label>
+    <span class="hint-{{passConfirmInputActive.toString()}}">This MUST be the same as your password.</span>
+    <br />
+    <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" (focus)="setPasswordConfirmActive(true)" (blur)="setPasswordConfirmActive(false)" />
+    @if (signupForm.get("confirmPassword")?.touched) {
+        @if ( signupForm.get("confirmPassword")?.hasError("required") ) {
+            <br />
+            <span class="error">You need to type something here, prefereable your password!</span>
+        }
+    }
+    <br />
+    <label for="username">Username</label>
+    <span class="hint-{{usernameInputActive.toString()}}">Enter a username people can identify you by</span>
+    <br />
+    <input type="text" id="username" name="username" formControlName="username" (focus)="setUsernameActive(true)" (blur)="setUsernameActive(false)" />
+    @if (signupForm.get("username")?.touched) {
+        @if ( signupForm.get("username")?.hasError("required") ) {
+            <br />
+            <span class="error">What'll they use to remember you by?</span>
+            <br />
+            <span class="error">Give yourself a name!!</span>
+
+        }
+    }
+    <br />
     <button type="submit" [disabled]="signupForm.invalid">Submit</button>
-    @if (signupForm.invalid) {
+    @if (signupForm.invalid && signupForm.touched) {
         <br />
-        <span>Fix errors in the form</span>
+        <span class="error">Fix errors in the form</span>
     }
 </form>

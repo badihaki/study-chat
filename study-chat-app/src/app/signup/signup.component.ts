@@ -22,6 +22,26 @@ export class SignupComponent {
     username: new FormControl("", Validators.required)
   })
 
+  emailInputActive:boolean = false;
+  setEmailActive(isActive:boolean){
+    this.emailInputActive = isActive;
+  }
+  
+  passInputActive:boolean = false;
+  setPasswordActive(isActive:boolean){
+    this.passInputActive = isActive;
+  }
+  
+  passConfirmInputActive:boolean = false;
+  setPasswordConfirmActive(isActive:boolean){
+    this.passConfirmInputActive = isActive;
+  }
+
+  usernameInputActive:boolean = false;
+  setUsernameActive(isActive:boolean){
+    this.usernameInputActive = isActive;
+  }
+
   handleSubmit(){
     console.log(this.signupForm.value);
     this.signupForm.reset();
