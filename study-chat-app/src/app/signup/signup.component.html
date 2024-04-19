@@ -1,0 +1,27 @@
+<h2>Sign Up</h2>
+
+<form [formGroup]="signupForm" (ngSubmit)="handleSubmit()">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" formControlName="email" />
+    @if (signupForm.get("email")?.touched) {
+        @if ( signupForm.get("email")?.hasError("required") || signupForm.get("email")?.hasError("email") ) {
+            <br />
+            <span class="error">Correct that email, homie!</span>
+        }
+    }
+    <br />
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" formControlName="password" />
+    @if (signupForm.get("password")?.touched) {
+        @if ( signupForm.get("password")?.hasError("required") ) {
+            <br />
+            <span class="error">Where's ya password??</span>
+        }
+    }
+    <br />
+    <button type="submit" [disabled]="signupForm.invalid">Submit</button>
+    @if (signupForm.invalid) {
+        <br />
+        <span>Fix errors in the form</span>
+    }
+</form>
