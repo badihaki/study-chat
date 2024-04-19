@@ -10,3 +10,5 @@ app.get("/", (req, res) => {
 app.listen(port, ()=>{
     console.log(`Listening on port ${port}`);
 })
+
+// mongodb+srv://jojackblack:IMN6Sfl5cesPKWL8@sc-cluster.bt1tdfm.mongodb.net/?retryWrites=true&w=majority&appName=SC-Cluster
