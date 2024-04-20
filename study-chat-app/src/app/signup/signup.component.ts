@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, ValidationErrors, AbstractControl } from "@angular/forms"
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms"
 
 @Component({
   selector: 'app-signup',

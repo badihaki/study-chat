@@ -1,1 +1,31 @@
-<p>login works!</p>
+<h2>Sign Up</h2>
+
+<form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+    <label for="email">Email</label>
+    <span class="hint-{{emailInputActive.toString()}}">Enter a valid and unique email address. This will be ued to log-in.</span>
+    <br />
+    <input type="email" id="email" name="email" formControlName="email" (focus)="setEmailActive(true)" (blur)="setEmailActive(false)" />
+    @if (loginForm.get("email")?.touched) {
+        @if ( loginForm.get("email")?.hasError("required") || loginForm.get("email")?.hasError("email") ) {
+            <br />
+            <span class="error">Correct that email, homie!</span>
+        }
+    }
+    <br />
+    <label for="password">Password</label>
+    <span class="hint-{{passInputActive.toString()}}">Enter a password that's at least 8 characters in length.</span>
+    <br />
+    <input type="password" id="password" name="password" formControlName="password" (focus)="setPasswordActive(true)" (blur)="setPasswordActive(false)" />
+    @if (loginForm.get("password")?.touched) {
+        @if ( loginForm.get("password")?.hasError("required") ) {
+            <br />
+            <span class="error">Where's ya password??</span>
+        }
+    }
+    <br />
+    <button type="submit" [disabled]="loginForm.invalid">Submit</button>
+    @if (loginForm.invalid && loginForm.touched) {
+        <br />
+        <span class="error">Fix errors in the form</span>
+    }
+</form>
