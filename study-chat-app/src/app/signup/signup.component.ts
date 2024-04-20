@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms"
 
 @Component({
@@ -11,6 +12,8 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angula
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
+
+  http = inject(HttpClient);
   
   signupForm:FormGroup = new FormGroup({
     email: new FormControl("",[
