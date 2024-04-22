@@ -33,15 +33,22 @@ export class LoginComponent {
   setPasswordActive(isActive:boolean){
     this.passInputActive = isActive;
   }
+
+  formErrorMessage:string = "";
   
   handleSubmit(){
-    console.log(this.loginForm.value);
-    this.http.post(this.serverAddress, this.loginForm).subscribe({
+    // console.log(this.loginForm.value);
+    this.http.post(this.serverAddress, this.loginForm.value).subscribe({
       next: (res)=>{
         console.log(res);
       },
       error: (err)=>{
         console.log(err.error);
+        this.formErrorMessage = err.error.error;
+        console.log(this.formErrorMessage);
+        setTimeout(() => {
+          this.formErrorMessage = "";
+        }, 5000);
       },
       complete: ()=>{
         console.log("complete, do stuff");

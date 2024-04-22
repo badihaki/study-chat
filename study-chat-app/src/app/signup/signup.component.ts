@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angula
 export class SignupComponent {
 
   http = inject(HttpClient);
+  serverAddress:string = "http://localhost:3000/auth/signup";
   
   signupForm:FormGroup = new FormGroup({
     email: new FormControl("",[
@@ -45,8 +46,24 @@ export class SignupComponent {
     this.usernameInputActive = isActive;
   }
 
+  formErrorMessage:string = "";
+
   handleSubmit(){
-    console.log(this.signupForm.value);
+    this.http.post(this.serverAddress, this.signupForm.value).subscribe({
+      next: ( res )=>{
+        console.log(res);
+      },
+      error: ( err )=>{
+        console.log(err.error);
+        this.formErrorMessage = err.error.error;
+        setTimeout(() => {
+          this.formErrorMessage = "";
+        }, 5000);
+      },
+      complete: ()=>{
+        console.log("completed, do stuff");
+      }
+    })
     this.signupForm.reset();
   } 
 
