@@ -40,10 +40,10 @@ router.post("/signup", async (req, res) => {
         }, 
         "unlock",
         {expiresIn: '1h'})
-        res.send({
+        res.send(JSON.stringify({
             user: newUser,
             token: token
-        });
+        }));
     }
     catch(err){
         console.log(err);
@@ -61,7 +61,18 @@ router.post("/login", async (req, res) => {
         try{
             if(await argon2.verify(findUser.password, password)){
                 console.log("pass match");
-                res.status(200).send(JSON.stringify({"user": findUser}));
+                const token = jsonWebToken.sign({
+                    data: {
+                        email:email,
+                        password, password
+                    }
+                }, 
+                "unlock",
+                {expiresIn: '1h'});
+                res.status(200).send(JSON.stringify({
+                    "user": findUser,
+                    "token": token
+                }));
             }
             else{
                 console.log("mismatch passwords");

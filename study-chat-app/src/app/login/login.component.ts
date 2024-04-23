@@ -41,6 +41,8 @@ export class LoginComponent {
     this.http.post(this.serverAddress, this.loginForm.value).subscribe({
       next: (res)=>{
         console.log(res);
+        const { user, token } = res as {user:{}, token:string};
+        localStorage.setItem("sc-token", token);
       },
       error: (err)=>{
         console.log(err.error);
