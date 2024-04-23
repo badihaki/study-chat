@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/UserModel");
 const router = express.Router();
 const argon2 = require("argon2");
+const jsonWebToken = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
     res.send({msg: "got to auth"});
@@ -31,7 +32,18 @@ router.post("/signup", async (req, res) => {
     }
     try{
         const newUser = await User.create({email: email, password: hashedPass, username: username, savedMessages: []});
-        res.send({user: newUser});
+        const token = jsonWebToken.sign({
+            data: {
+                email:email,
+                password, password
+            }
+        }, 
+        "unlock",
+        {expiresIn: '1h'})
+        res.send({
+            user: newUser,
+            token: token
+        });
     }
     catch(err){
         console.log(err);
