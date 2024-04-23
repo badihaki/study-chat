@@ -21,8 +21,14 @@ export class SignupComponent {
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl("", Validators.required),
-    confirmPassword: new FormControl("", Validators.required),
+    password: new FormControl("", [
+      Validators.required,
+      Validators.minLength(8)
+    ]),
+    confirmPassword: new FormControl("", [
+      Validators.required,
+      Validators.minLength(8)
+    ]),
     username: new FormControl("", Validators.required)
   })
 
@@ -49,25 +55,31 @@ export class SignupComponent {
   formErrorMessage:string = "";
 
   handleSubmit(){
-    this.http.post(this.serverAddress, this.signupForm.value).subscribe({
-      next: ( res )=>{
-        console.log(res);
-        const { user, token } = res as {user:{}, token:string};
-        localStorage.setItem("sc-token", token);
-      },
-      error: ( err )=>{
-        console.log(err.error);
-        this.formErrorMessage = err.error.error;
-        setTimeout(() => {
-          this.formErrorMessage = "";
-        }, 5000);
-      },
-      complete: ()=>{
-        console.log("completed, do stuff");
-      }
-    })
+    if(this.signupForm.valid){
+      this.http.post(this.serverAddress, this.signupForm.value).subscribe({
+        next: ( res )=>{
+          console.log(res);
+          const { user, token } = res as {user:{}, token:string};
+          localStorage.setItem("sc-token", token);
+        },
+        error: ( err )=>{
+          console.log(err.error);
+          this.formErrorMessage = err.error.error;
+          setTimeout(() => {
+            this.formErrorMessage = "";
+          }, 5000);
+        },
+        complete: ()=>{
+          console.log("completed, do stuff");
+        }
+      })
+    }
+    else{
+      this.formErrorMessage = "Issues with form, please retry!";
+      setTimeout( ()=> this.formErrorMessage = "", 5000 );
+    }
     this.signupForm.reset();
-  } 
+  }
 
 
 }
