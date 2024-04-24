@@ -4,8 +4,29 @@ const router = express.Router();
 const argon2 = require("argon2");
 const jsonWebToken = require("jsonwebtoken");
 
-router.get("/", (req, res) => {
-    res.send({msg: "got to auth"});
+router.post("/", async (req, res) => {
+    const { token } = req.body;
+    if(!token){
+        res.status(400).send({
+            "error":"no user found"
+        });
+        return;
+    }
+    try{
+        const verifiedToken = jsonWebToken.verify(token, "unlock");
+        const { email } = verifiedToken.data;
+        const user = await User.findOne({email});
+        res.status(200).send(JSON.stringify({
+            msg: "got to auth",
+            user: user
+        }));
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).send({
+            "error":err
+        })
+    }
 })
 
 router.post("/signup", async (req, res) => {

@@ -3,6 +3,7 @@ import { LoginComponent } from '../login/login.component';
 import { SignupComponent } from '../signup/signup.component';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import User from '../interfaces/user';
 
 @Component({
   selector: 'app-auth',
@@ -21,11 +22,14 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem("sc-token");
+    console.log(token);
     if(!this.userService.user && token){
-      this.http.post(this.serverAddress, token).subscribe({
+      this.http.post(this.serverAddress, {"token":token}).subscribe({
         next: ( res ) => {
           console.log("your response on load");
           console.log(res);
+          const {user} = res as {user:User};
+          this.userService.setUser(user);
         },
         complete: () => {
           console.log("completed");
