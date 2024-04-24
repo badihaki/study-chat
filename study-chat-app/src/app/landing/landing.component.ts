@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import { AuthComponent } from '../auth/auth.component';
-import { UserService } from '../services/user.service';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-landing',

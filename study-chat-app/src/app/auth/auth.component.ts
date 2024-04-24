@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { SignupComponent } from '../signup/signup.component';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../services/user.service';
-import User from '../interfaces/user';
+import { UserService } from '../_services/user.service';
+import User from '../_interfaces/user';
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
       this.http.post(this.serverAddress, {"token":token}).subscribe({
         next: ( res ) => {
           console.log("your response on load");
-          console.log(res);
+          // console.log(res);
           const {user} = res as {user:User};
           this.userService.setUser(user);
         },

@@ -1,0 +1,31 @@
+    nav{
+        background-color: rgb(178, 110, 238);
+        color: whitesmoke;
+        -webkit-mask-image: linear-gradient(black, transparent);
+        // border: solid whitesmoke 1rem;
+        mask-image: linear-gradient(black, transparent);
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      
+      li {
+        float: left;
+      }
+      
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+        transition: ease-in-out 550ms;
+      }
+      
+      li a:hover {
+        color: snow;
+        background-color: rgb(94, 65, 183);
+      }

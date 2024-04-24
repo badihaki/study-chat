@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms"
-import { UserService } from '../services/user.service';
-import User from '../interfaces/user';
+import { UserService } from '../_services/user.service';
+import User from '../_interfaces/user';
 
 @Component({
   selector: 'app-signup',
