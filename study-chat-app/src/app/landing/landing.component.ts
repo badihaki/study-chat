@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { HomeComponent } from '../home/home.component';
 import { AuthComponent } from '../auth/auth.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-landing',
@@ -13,6 +13,6 @@ import { AuthComponent } from '../auth/auth.component';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
-export class LandingComponent {
+export class LandingComponent{
   userService = inject(UserService);
 }
