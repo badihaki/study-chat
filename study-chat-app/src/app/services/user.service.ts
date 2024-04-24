@@ -12,6 +12,7 @@ export class UserService {
 
   setUser(newUser:User){
     this.user = newUser;
+    console.log(this.user);
   }
   removeUser(){
     this.user = null;

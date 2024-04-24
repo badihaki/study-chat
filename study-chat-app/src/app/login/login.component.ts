@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
+import User from '../interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class LoginComponent {
 
   http = inject(HttpClient);
+  userService = inject(UserService);
+
   serverAddress:string = "http://localhost:3000/auth/login";
 
   loginForm:FormGroup = new FormGroup({
@@ -43,6 +47,7 @@ export class LoginComponent {
           console.log(res);
           const { user, token } = res as {user:{}, token:string};
           localStorage.setItem("sc-token", token);
+          this.userService.setUser(user as User);
         },
         error: (err)=>{
           console.log(err.error);

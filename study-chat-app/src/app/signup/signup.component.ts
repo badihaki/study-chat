@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms"
+import { UserService } from '../services/user.service';
+import User from '../interfaces/user';
 
 @Component({
   selector: 'app-signup',
@@ -14,6 +16,8 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angula
 export class SignupComponent {
 
   http = inject(HttpClient);
+  userService = inject(UserService);
+
   serverAddress:string = "http://localhost:3000/auth/signup";
   
   signupForm:FormGroup = new FormGroup({
@@ -61,6 +65,7 @@ export class SignupComponent {
           console.log(res);
           const { user, token } = res as {user:{}, token:string};
           localStorage.setItem("sc-token", token);
+          this.userService.setUser(user as User);
         },
         error: ( err )=>{
           console.log(err.error);
