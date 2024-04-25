@@ -1,21 +1,23 @@
     nav{
         background-color: rgb(178, 110, 238);
-        border-radius: 3rem;
+        border-radius: 2rem;
         color: whitesmoke;
         font-size: larger;
         font-weight: bolder;
         
-        mask: linear-gradient(90deg, transparent, white 25%, white 70%, transparent);
-        -webkit-mask: linear-gradient(90deg, transparent, white 25%, white 70%, transparent);
+        mask: linear-gradient(90deg, white 70%, transparent);
+        -webkit-mask: linear-gradient(90deg, white 70%, transparent);
         overflow: hidden;
 
         position: sticky;
         width: 100%;
         top: 0;
+
+        z-index: 1;
     }
     ul {
         list-style-type: none;
-        margin: 0rem 0rem 0rem 25%;
+        margin: 0rem 0rem 0rem 0rem;
         padding: 0;
         overflow: hidden;
       }
@@ -36,6 +38,6 @@
       
       li a:hover {
         color: snow;
-        border-radius: 3rem;
+        border-radius: 2rem;
         background-color: rgb(94, 65, 183);
       }
