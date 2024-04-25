@@ -1,19 +1,28 @@
     nav{
         background-color: rgb(178, 110, 238);
+        border-radius: 3rem;
         color: whitesmoke;
-        -webkit-mask-image: linear-gradient(black, transparent);
-        // border: solid whitesmoke 1rem;
-        mask-image: linear-gradient(black, transparent);
+        font-size: larger;
+        font-weight: bolder;
+        
+        mask: linear-gradient(90deg, transparent, white 25%, white 70%, transparent);
+        -webkit-mask: linear-gradient(90deg, transparent, white 25%, white 70%, transparent);
+        overflow: hidden;
+
+        position: sticky;
+        width: 100%;
+        top: 0;
     }
     ul {
         list-style-type: none;
-        margin: 0;
+        margin: 0rem 0rem 0rem 25%;
         padding: 0;
         overflow: hidden;
       }
       
       li {
         float: left;
+        margin: 0rem 1rem 0rem 1rem;
       }
       
       li a {
@@ -27,5 +36,6 @@
       
       li a:hover {
         color: snow;
+        border-radius: 3rem;
         background-color: rgb(94, 65, 183);
       }
