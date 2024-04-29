@@ -1,0 +1,25 @@
+<h2>Chat Room</h2>
+<div id="content">
+    <div class="chat__sidebar">
+            <h4>Welcome to the chat. Don't forget the rules:</h4>
+            <ul class="rules__list">
+                <li>No foul language</li>
+                <li>Respect each other</li>
+            </ul>
+    </div>
+    <div class="message-panel">
+        <div class="messages">
+            @if (messages.length != 0) {
+                @for (message of messages; track $index) {
+                    {{ message.content }}
+                }
+            }
+            @else {
+                <p>No messages yet</p>
+            }
+        </div>
+    </div>
+    <div class="message-form">
+        <form></form>
+    </div>
+</div>

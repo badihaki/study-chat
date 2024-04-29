@@ -1,0 +1,17 @@
+.important{
+    font-weight: bolder;
+    font-size: large;
+}
+
+a{
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: large;
+    color: darkorchid;
+    transition: ease-in-out 550ms;
+}
+
+a:hover{
+    color: orchid;
+    font-size: larger;
+}

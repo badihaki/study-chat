@@ -1,0 +1,20 @@
+.error{
+    color: red;
+    font-weight: bolder;
+    font-size: small;
+}
+
+.hint-true{
+    font-weight: bolder;
+    font-size: small;
+    margin-left: 1rem;
+    color: black;
+    
+    transition: 0.5s ease-in-out;
+}
+.hint-false{
+    color: transparent;
+    // display: none;
+
+    transition: 0.5s ease-in-out;
+}
