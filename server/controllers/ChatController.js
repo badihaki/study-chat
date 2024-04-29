@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
         previousID = currentID;
     }
 
-    socket.on("getChat", (msg) => {
+    socket.on("getMsg", (msg) => {
         console.log(`Message recieved: ${msg}`);
     })
 });
