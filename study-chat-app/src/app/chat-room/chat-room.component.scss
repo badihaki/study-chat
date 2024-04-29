@@ -1,4 +1,4 @@
-#content{
+.content{
     position: relative;
 }
 
@@ -34,12 +34,28 @@
     height: 50%;
     top: 15%;
     left: 2%;
-    align-self: center;
 
+    padding: 2rem 1rem 1rem 1rem;
+
+    align-self: center;
+    border-radius: 3rem;
+    
     background-color:lightslategray;
     color: whitesmoke;
 }
 
 .messages{
     position: relative;
+}
+
+.message-form{
+    background-color: lightslategray;
+    color: whitesmoke;
+    
+    position: fixed;
+    left: 60%;
+    top: 50%;
+    
+    border-radius: 1.5rem;
+    padding: 1rem 2rem 1rem 2rem;
 }

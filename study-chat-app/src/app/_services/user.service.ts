@@ -8,14 +8,17 @@ import User from "../_interfaces/user.js"
 export class UserService {
   constructor() { }
   http = inject(HttpClient);
-  user?:User|null = null;
+  user:User|null = null;
 
-  setUser(newUser:User){
+  setUser(newUser:User|null){
     this.user = newUser;
-    console.log(this.user);
+    // console.log(this.user);
+  }
+  getUser(){
+    return this.user;
   }
   removeUser(){
+    console.log("removing user");
     this.user = null;
   }
-
 }

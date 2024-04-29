@@ -1,5 +1,5 @@
 <h2>Chat Room</h2>
-<div id="content">
+<div class="content">
     <div class="chat__sidebar">
             <h4>Welcome to the chat. Don't forget the rules:</h4>
             <ul class="rules__list">
@@ -20,6 +20,11 @@
         </div>
     </div>
     <div class="message-form">
-        <form></form>
+        <form [formGroup]="messageForm" (ngSubmit)="handleSubmit()">
+            <label for="content">Type a message here: </label>
+            <input type="text" id="content" formControlName="content" />
+            <br />
+            <button type="submit">Send Message</button>
+        </form>
     </div>
 </div>
