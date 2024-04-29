@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/socket.io": "^3.0.2",
     "argon2": "^0.40.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
