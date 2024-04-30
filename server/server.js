@@ -24,12 +24,12 @@ io.on('connection', (socket) => {
     // }
 
     socket.on("message", (msg) => {
-        msg.id = randomUUID();
+        msg._id = randomUUID();
 
         console.log(`Message recieved:`);
         console.log(msg);
         
-        socket.emit("message", msg);
+        io.emit("message", msg);
     })
     
     socket.on("disconnect", () => {

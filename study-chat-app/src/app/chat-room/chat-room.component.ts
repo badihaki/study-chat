@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
@@ -28,7 +28,6 @@ export class ChatRoomComponent implements OnInit {
       }
       else{
         this.chatService.getMessages().subscribe( (msg) => {
-        // console.log(msg);
         this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
         })
       }
@@ -41,9 +40,6 @@ export class ChatRoomComponent implements OnInit {
   });
 
   handleSubmit(){
-    // console.log(this.messageForm.value);
-    // console.log(this.userService.user?.username);
-    // console.log(this.messageForm.valid);
     if(this.messageForm.valid){
       const msg = { msg: this.messageForm.value, user:this.userService.user?.username } 
       this.chatService.sendMessage(msg);

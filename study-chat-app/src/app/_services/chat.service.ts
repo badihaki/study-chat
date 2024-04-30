@@ -21,12 +21,13 @@ export class ChatService {
         console.log(msg);
         observer.next(msg);
       });
-      return () => this.socket.disconnect();
+      // return () => this.socket.disconnect();
     })
     return observable;
   }
 
-  disconnect(){
-    this.socket.emit("disconnect");
+  disconnectChatConnection(){
+    // this.socket.emit("disconnect");
+    this.socket.disconnect();
   }
 }
