@@ -11,7 +11,7 @@
         <div class="messages">
             @if (messages.length != 0) {
                 @for (message of messages; track $index) {
-                    {{ message.content }}
+                    <app-chat-message [message]="message" />
                 }
             }
             @else {

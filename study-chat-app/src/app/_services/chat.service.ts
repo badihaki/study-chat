@@ -15,7 +15,7 @@ export class ChatService {
   }
 
   getMessages(){
-    let observable = new Observable<{ _id:string, content:string, user:string }>( observer => {
+    let observable = new Observable<{ _id:string, msg:{ content:string }, user:string }>( observer => {
       this.socket.on("message", ( msg ) => {
         console.log("got new message in service!!")
         console.log(msg);

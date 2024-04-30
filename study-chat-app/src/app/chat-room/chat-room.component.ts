@@ -3,12 +3,14 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
+import { ChatMessageComponent } from '../chat-message/chat-message.component';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChatMessageComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss'
@@ -26,13 +28,13 @@ export class ChatRoomComponent implements OnInit {
       }
       else{
         this.chatService.getMessages().subscribe( (msg) => {
-        console.log(msg);
-        this.messages.push(msg as {_id:string, content:string, user:string});
+        // console.log(msg);
+        this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
         })
       }
     }
 
-  messages:{_id:string, content:string, user:string}[] = [];
+  messages:{_id:string, msg:{ content:string }, user:string }[] = [];
   
   messageForm:FormGroup = new FormGroup({
     content: new FormControl("", Validators.required)
