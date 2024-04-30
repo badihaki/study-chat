@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
@@ -17,20 +17,22 @@ export class ChatRoomComponent implements OnInit {
   constructor(
     private router: Router,
     private userService:UserService,
-    private chatService:ChatService
+    private chatService:ChatService,
   ){}
   
     ngOnInit(): void {
       if(!this.userService.user){
         this.router.navigate(["/"]);
       }
-
-      // this.chatService.getMessages().subscribe( (msg) => {
-      //   this.messages.push(msg as {_id:string, content:string});
-      // })
+      else{
+        this.chatService.getMessages().subscribe( (msg) => {
+          // console.log
+        this.messages.push(msg as {_id:string, content:string, user:string});
+        })
+      }
     }
 
-  messages:{_id:string, content:string}[] = [];
+  messages:{_id:string, content:string, user:string}[] = [];
   
   messageForm:FormGroup = new FormGroup({
     content: new FormControl("", Validators.required)
@@ -38,6 +40,11 @@ export class ChatRoomComponent implements OnInit {
 
   handleSubmit(){
     console.log(this.messageForm.value);
-    this.chatService.sendMessage(this.messageForm.value);
+    console.log(this.userService.user?.username);
+    console.log(this.messageForm.valid);
+    if(this.messageForm.valid){
+      const msg = { msg: this.messageForm.value, user:this.userService.user?.username } 
+      this.chatService.sendMessage(msg);
+    }
   }
 }

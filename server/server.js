@@ -24,7 +24,9 @@ io.on('connection', (socket) => {
     // }
 
     socket.on("message", (msg) => {
-        console.log(`Message recieved: ${msg}`);
+        console.log(`Message recieved:`);
+        console.log(msg);
+        socket.emit("message", msg);
     })
     
     socket.on("disconnect", () => {

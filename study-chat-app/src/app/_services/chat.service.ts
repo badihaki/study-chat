@@ -10,17 +10,21 @@ export class ChatService {
   
   private socket = io("http://localhost:8080");
 
-  sendMessage( msg:{content:string} ){
-    this.socket.emit(`message`, msg);
+  sendMessage( messageData:{ msg:string, user:string|undefined } ){
+    this.socket.emit(`message`, messageData);
   }
 
   getMessages(){
-    let observable = new Observable<{ _id:string, content:string }>( observer => {
+    let observable = new Observable<{ _id:string, content:string, user:string }>( observer => {
       this.socket.on("getMsg", ( data ) => {
         observer.next(data);
       });
       return () => this.socket.disconnect();
     })
     return observable;
+  }
+
+  disconnect(){
+    this.socket.emit("disconnect");
   }
 }
