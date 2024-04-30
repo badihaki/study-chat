@@ -26,7 +26,7 @@ export class ChatRoomComponent implements OnInit {
       }
       else{
         this.chatService.getMessages().subscribe( (msg) => {
-          // console.log
+        console.log(msg);
         this.messages.push(msg as {_id:string, content:string, user:string});
         })
       }
@@ -39,12 +39,13 @@ export class ChatRoomComponent implements OnInit {
   });
 
   handleSubmit(){
-    console.log(this.messageForm.value);
-    console.log(this.userService.user?.username);
-    console.log(this.messageForm.valid);
+    // console.log(this.messageForm.value);
+    // console.log(this.userService.user?.username);
+    // console.log(this.messageForm.valid);
     if(this.messageForm.valid){
       const msg = { msg: this.messageForm.value, user:this.userService.user?.username } 
       this.chatService.sendMessage(msg);
+      this.messageForm.reset();
     }
   }
 }

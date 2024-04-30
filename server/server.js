@@ -12,7 +12,7 @@ const io = require('socket.io')(httpServer, {
 });
 
 io.on('connection', (socket) => {
-    console.log("someone connected");
+    console.log("user connected");
     
     // let previousID;
     // const safeJoin = ( currentID ) => {
@@ -24,8 +24,11 @@ io.on('connection', (socket) => {
     // }
 
     socket.on("message", (msg) => {
+        msg.id = randomUUID();
+
         console.log(`Message recieved:`);
         console.log(msg);
+        
         socket.emit("message", msg);
     })
     
@@ -36,6 +39,7 @@ io.on('connection', (socket) => {
 
 //MARK: controller imports
 const authController = require("./controllers/AuthController.js");
+const { randomUUID } = require("crypto");
 // const chatController = require("./controllers/ChatController.js");
 
 //MARK: Middleware
