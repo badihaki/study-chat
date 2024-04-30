@@ -25,9 +25,9 @@ export class ChatRoomComponent implements OnInit {
         this.router.navigate(["/"]);
       }
 
-      this.chatService.getMessages().subscribe( (msg) => {
-        this.messages.push(msg as {_id:string, content:string});
-      })
+      // this.chatService.getMessages().subscribe( (msg) => {
+      //   this.messages.push(msg as {_id:string, content:string});
+      // })
     }
 
   messages:{_id:string, content:string}[] = [];

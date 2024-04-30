@@ -8,10 +8,10 @@ import { Observable } from 'rxjs';
 export class ChatService {
   constructor() { }
   
-  private socket = io("http://localhost:3000/chat");
+  private socket = io("http://localhost:8080");
 
   sendMessage( msg:{content:string} ){
-    this.socket.emit(`message: ${msg}`);
+    this.socket.emit(`message`, msg);
   }
 
   getMessages(){
