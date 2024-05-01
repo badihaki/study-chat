@@ -11,8 +11,23 @@ const io = require('socket.io')(httpServer, {
   cors: {origin : '*'}
 });
 
+//MARK: Import the functions from User
+const { getUser, getAllUsersInRoom, addUser, removeUser } = require("./ChatConfig.js")
+
 io.on('connection', (socket) => {
     console.log("user connected");
+
+    socket.on("joinRoom", ( {name, room}, callback ) => {
+        const { user, error } = addUser(socket._id, name, room);
+        if(error){
+            return callback(error);
+        }
+
+        socket.join(user.room);
+        socket.in(room).emit("notification", `${name} just joined the room`);
+        io.in(room).emit("users", getAllUsersInRoom(room));
+        callback();
+    })
     
     // let previousID;
     // const safeJoin = ( currentID ) => {
@@ -23,17 +38,28 @@ io.on('connection', (socket) => {
     //     previousID = currentID;
     // }
 
-    socket.on("message", (msg) => {
-        msg._id = randomUUID();
+    // socket.on("message", (msg) => {
+    //     msg._id = randomUUID();
 
-        console.log(`Message recieved:`);
-        console.log(msg);
+    //     console.log(`Message recieved:`);
+    //     console.log(msg);
         
-        io.emit("message", msg);
+    //     io.emit("message", msg);
+    // })
+
+    socket.on("message", ( msg ) => {
+        const user = getUser(socket._id);
+        msg._id = randomUUID();
+        io.in(user.room).emit("message", msg);
     })
     
     socket.on("disconnect", () => {
         console.log("user disconnected");
+        const user = removeUser(socket._id);
+        if( user ){
+            io.in(user.room).emit("notification", `${user.name} left the channel`);
+            io.in(user.room).emit("users", getAllUsersInRoom(user.room));
+        }
     })
 });
 
