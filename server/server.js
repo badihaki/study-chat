@@ -17,15 +17,24 @@ const { getUser, getAllUsersInRoom, addUser, removeUser, users } = require("./Ch
 io.on('connection', (socket) => {
     console.log("user connected");
 
-    socket.on("joinRoom", ( {name, room}, callback ) => {
-        const { user, error } = addUser(socket._id, name, room);
+    socket.on("joinRoom", ( {username, roomID}, callback ) => {
+        // console.log("Socket:");
+        // console.log(socket);
+        const { user, error } = addUser(socket.id, username, roomID);
+        console.log("returned user:");
+        console.log(user);
         if(error){
+            console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             return callback(error);
         }
-
-        socket.join(user.room);
-        socket.in(room).emit("notification", `${name} just joined the room`);
-        io.in(room).emit("users", getAllUsersInRoom(room));
+        if(!user){
+            console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            console.log("No user");
+            return;
+        }
+        socket.join(user.roomID);
+        socket.in(roomID).emit("notification", `${username} just joined the room`);
+        io.in(roomID).emit("users", getAllUsersInRoom(roomID));
         callback();
     })
 

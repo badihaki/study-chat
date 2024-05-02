@@ -1,15 +1,19 @@
 const users = [];
 
 function addUser( socketID, userName, roomID ){
+    const user = { socketID, userName, roomID };
     if(users.includes(socketID)){
         return { error: `User ${socketID} is already here` };
     }
     else{
-        const user = { socketID, userName, roomID };
         users.push(user);
-        console.log(users);
-        return user;
+
+        console.log("added user:");
+        console.log(user);
+        console.log("full users list");
+        console.log(users);  
     }
+    return {user};
 }
 
 function getUser( socketID ){
