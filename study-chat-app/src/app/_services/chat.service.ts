@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { io } from "socket.io-client";
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,23 @@ export class ChatService {
   constructor() { }
   
   private socket = io("http://localhost:8080");
+  private http = inject(HttpClient);
+  
+  getAllRooms():Subscription{
+    return this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
+      console.log("room data: ");
+      console.log(data);
+      return(data);
+    })
+  }
+
+  connectToRoom( userData: { username:string, roomID:string } ){
+    const callback = ( err:{error:string} )=>{
+      console.log(err);
+    };
+    const { username, roomID } = userData;
+    this.socket.emit("joinRoom", { username, roomID }, callback )
+  }
 
   sendMessage( messageData:{ msg:string, user:string|undefined } ){
     this.socket.emit(`message`, messageData);

@@ -3,7 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { LandingComponent } from './landing/landing.component';
 import { ErrorComponent } from './error/error.component';
-import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { ChatLauncherComponent } from './chat-launcher/chat-launcher.component';
 
 export const routes: Routes = [
     {
@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: "chat",
-        component: ChatRoomComponent
+        component: ChatLauncherComponent
     },
     {
         path: "**",

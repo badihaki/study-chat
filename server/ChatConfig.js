@@ -34,4 +34,4 @@ function removeUser( socketID ){
     }
 }
 
-module.exports = { getUser, getAllUsersInRoom, addUser, removeUser };
+module.exports = { getUser, getAllUsersInRoom, addUser, removeUser, users };

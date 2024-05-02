@@ -12,7 +12,7 @@ const io = require('socket.io')(httpServer, {
 });
 
 //MARK: Import the functions from User
-const { getUser, getAllUsersInRoom, addUser, removeUser } = require("./ChatConfig.js")
+const { getUser, getAllUsersInRoom, addUser, removeUser, users } = require("./ChatConfig.js")
 
 io.on('connection', (socket) => {
     console.log("user connected");
@@ -28,6 +28,16 @@ io.on('connection', (socket) => {
         io.in(room).emit("users", getAllUsersInRoom(room));
         callback();
     })
+
+    // socket.on("getRooms", ()=>{
+    //     const rooms = [];
+    //     users.map(user => user.roomID).forEach( room => {
+    //         if(!rooms.includes(room)){
+    //             rooms.push(room);
+    //         }
+    //     })
+    //     io.emit("notification")
+    // })
     
     // let previousID;
     // const safeJoin = ( currentID ) => {
@@ -76,6 +86,17 @@ app.use(cors());
 //MARK: Routes
 app.use("/auth", authController);
 // app.use("/chat", chatController);
+app.get("/getRooms", ( req, res )=>{
+    const rooms = [];
+    users.map(user => user.roomID).forEach( room => {
+        if(!rooms.includes(room)){
+            rooms.push(room);
+        }
+    })
+    console.log(rooms);
+    res.send(rooms);
+});
+
 
 mongoose.connect(mongooseURI).then( () => {
     app.listen(port, ()=>{
