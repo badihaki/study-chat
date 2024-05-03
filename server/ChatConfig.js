@@ -8,11 +8,6 @@ function addUser( socketID, userName, roomID ){
     }
     else{
         users.push(user);
-
-        console.log("added user:");
-        console.log(user);
-        console.log("full users list");
-        console.log(users);
         rooms.push(roomID);
     }
     return {user};
