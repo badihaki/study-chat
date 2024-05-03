@@ -9,6 +9,7 @@ export class UserService {
   constructor() { }
   http = inject(HttpClient);
   user:User|null = null;
+  currentChatRoom:string|undefined = undefined;
 
   setUser(newUser:User|null){
     this.user = newUser;

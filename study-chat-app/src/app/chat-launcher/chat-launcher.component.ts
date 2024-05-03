@@ -36,31 +36,22 @@ export class ChatLauncherComponent implements OnInit{
   async getRooms(){
     await this.chatService.getAllRooms();
     this.rooms = this.chatService.rooms;
-    // console.log(this.chatService.rooms);
-    // console.log(this.rooms);
   }
   
   handleSubmit(event:Event){
     event.preventDefault();
     const selection:HTMLSelectElement|null = document.getElementById("chat-join") as HTMLSelectElement;
     if(selection.value === "new"){
-      this.handleCreateChat();
+      this.handleJoinChat(this.userService.user?.username as string);
+      this.userService.currentChatRoom = this.userService.user?.username;
     }
     else{
       this.handleJoinChat(selection.value);
+      this.userService.currentChatRoom = selection.value;
     }
     
   }
 
-  handleCreateChat(){
-    console.log("creating");
-    const userData = {
-      username: this.userService.user?.username,
-      roomID: this.userService.user?.username
-    }
-    this.chatService.connectToRoom(userData as {username:string, roomID:string});
-    this.showChatroom = true;
-  }
   handleJoinChat(room:string){
     console.log(`joining ${room}`);
     const userData = {
