@@ -3,11 +3,14 @@ import { ChatService } from '../_services/chat.service';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ChatRoomComponent } from '../chat-room/chat-room.component';
 
 @Component({
   selector: 'app-chat-launcher',
   standalone: true,
-  imports: [],
+  imports: [
+    ChatRoomComponent
+  ],
   templateUrl: './chat-launcher.component.html',
   styleUrl: './chat-launcher.component.scss'
 })
@@ -24,6 +27,7 @@ export class ChatLauncherComponent{
   }
   serverAddress = "http://localhost:8080/getRooms"
   rooms?:any[]
+  showChatroom:boolean = false;
   
   handleSubmit(event:Event){
     event.preventDefault();
@@ -41,6 +45,7 @@ export class ChatLauncherComponent{
       roomID: this.userService.user?.username
     }
     this.chatService.connectToRoom(userData as {username:string, roomID:string});
+    this.showChatroom = true;
   }
   handleJoinChat(){
     console.log("joining");

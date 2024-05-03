@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { io } from "socket.io-client";
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -21,11 +21,24 @@ export class ChatService {
   }
 
   connectToRoom( userData: { username:string, roomID:string } ){
-    const callback = ( err:{error:string} )=>{
-      console.log(err);
+    const callback = ( msg:string )=>{
+      console.log(msg);
     };
     const { username, roomID } = userData;
-    this.socket.emit("joinRoom", { username, roomID }, callback )
+    this.socket.emit("joinRoom", { username, roomID }, callback );
+  }
+  
+  getNotifications(){
+    let notificationObservable = new Observable<string>( observer =>{
+      this.socket.on("notification", ( msg )=>{
+        console.log("got new ./notification in chat service!!");
+        console.log(msg);
+        
+        observer.next(msg);
+      })
+      return () => this.socket.disconnect();
+    });
+    return notificationObservable;
   }
 
   sendMessage( messageData:{ msg:string, user:string|undefined } ){
@@ -35,11 +48,11 @@ export class ChatService {
   getMessages(){
     let observable = new Observable<{ _id:string, msg:{ content:string }, user:string }>( observer => {
       this.socket.on("message", ( msg ) => {
-        console.log("got new message in service!!")
+        console.log("got new ~ message ~ in chat service!!")
         console.log(msg);
         observer.next(msg);
       });
-      // return () => this.socket.disconnect();
+      return () => this.socket.disconnect();
     })
     return observable;
   }

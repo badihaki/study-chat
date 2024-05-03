@@ -5,17 +5,22 @@
     </p>
 </div>
 <br />
-<form>
-    <label for="chat-join">Join the Chat</label>
-    <br />
-    <select name="chat-join" id="chat-join">
-        <option value="new">New Chat</option>
-        @if (rooms && rooms.length > 0) {
-            @for (room of rooms; track $index) {
-                <option value={room.toLowerCase}>Join Room {{room}}</option>
+@if (showChatroom) {
+    <app-chat-room />
+}
+@else {
+    <form>
+        <label for="chat-join">Join the Chat</label>
+        <br />
+        <select name="chat-join" id="chat-join">
+            <option value="new">New Chat</option>
+            @if (rooms && rooms.length > 0) {
+                @for (room of rooms; track $index) {
+                    <option value={room.toLowerCase}>Join Room {{room}}</option>
+                }
             }
-        }
-    </select>
-    <br />
-    <button type="submit" (click)="handleSubmit($event)" >Create / Join Chat</button>
-</form>
+        </select>
+        <br />
+        <button type="submit" (click)="handleSubmit($event)" >Create / Join Chat</button>
+    </form>
+}

@@ -21,7 +21,7 @@ function getUser( socketID ){
     if(!user){
         return null;
     }
-    return user;
+    return {user};
 }
 
 function getAllUsersInRoom( roomID ){
