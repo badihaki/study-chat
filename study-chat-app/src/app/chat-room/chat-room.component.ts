@@ -1,36 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ChatMessageComponent
+    ChatMessageComponent,
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss'
 })
 export class ChatRoomComponent implements OnInit {
   constructor(
-    private router: Router,
-    private userService:UserService,
+    public userService:UserService,
     private chatService:ChatService,
   ){}
   
     ngOnInit(): void {
-      if(!this.userService.user){
-        this.router.navigate(["/"]);
-      }
-      else{
-        this.chatService.getMessages().subscribe( (msg) => {
-        this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
-        })
-      }
+      this.chatService.getMessages().subscribe( (msg) => {
+      this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
+    })
     }
 
   messages:{_id:string, msg:{ content:string }, user:string }[] = [];
@@ -46,4 +41,5 @@ export class ChatRoomComponent implements OnInit {
       this.messageForm.reset();
     }
   }
+
 }

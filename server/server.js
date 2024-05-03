@@ -11,8 +11,48 @@ const io = require('socket.io')(httpServer, {
   cors: {origin : '*'}
 });
 
+//Import the functions from User
+const { getUser, getAllUsersInRoom, addUser, removeUser, users, rooms } = require("./ChatConfig.js")
+
 io.on('connection', (socket) => {
     console.log("user connected");
+
+    socket.on("joinRoom", ( {username, roomID}, callback ) => {
+        const { user, error } = addUser(socket.id, username, roomID);
+        if(error){
+            return callback(error.error);
+        }
+        if(!user){
+            return;
+        }
+        socket.join(user.roomID);
+        socket.in(`${roomID}`).emit("notification", `${username} just joined the room`);
+        io.in(roomID).emit("users", getAllUsersInRoom(roomID));
+        callback();
+    })
+    
+        socket.on("message", ( msg ) => {
+            const user = getUser(socket.id);
+            const roomID = rooms.find(room => room === user.roomID);
+            msg._id = randomUUID();
+            if(roomID){
+                io.in(roomID).emit("message", msg);
+            }
+            else{
+                io.emit("message", `Can't find room`);
+            }
+        })
+        
+        socket.on("disconnect", ( reason, details ) => {
+            console.log("user disconnected");
+            const user = removeUser(socket.id);
+            if(user){
+                io.in(user.room).emit("notification", `${user.name} left the channel`);
+                io.in(user.room).emit("users", getAllUsersInRoom(user.room));
+            }
+            console.log("details below:");
+            console.log(details);
+        })
     
     // let previousID;
     // const safeJoin = ( currentID ) => {
@@ -22,19 +62,6 @@ io.on('connection', (socket) => {
     //     })
     //     previousID = currentID;
     // }
-
-    socket.on("message", (msg) => {
-        msg._id = randomUUID();
-
-        console.log(`Message recieved:`);
-        console.log(msg);
-        
-        io.emit("message", msg);
-    })
-    
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    })
 });
 
 //MARK: controller imports
@@ -49,7 +76,18 @@ app.use(cors());
 
 //MARK: Routes
 app.use("/auth", authController);
-// app.use("/chat", chatController);
+app.get("/getRooms", ( req, res )=>{
+    const rooms = [];
+    users.map(user => user.roomID).forEach( room => {
+        if(!rooms.includes(room)){
+            rooms.push(room);
+        }
+    })
+    // console.log("rooms::");
+    // console.log(rooms);
+    res.send(rooms);
+});
+
 
 mongoose.connect(mongooseURI).then( () => {
     app.listen(port, ()=>{
