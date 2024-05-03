@@ -10,15 +10,6 @@ export class ChatService {
   constructor() { }
   
   private socket = io("http://localhost:8080");
-  private http = inject(HttpClient);
-  rooms:[] = []
-  
-  async getAllRooms(){
-    await this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
-      console.log(data);
-      this.rooms = data as [];
-    })
-  }
 
   connectToWS(){
     this.socket.connect();

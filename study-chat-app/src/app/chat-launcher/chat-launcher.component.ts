@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from '../_services/chat.service';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
@@ -30,18 +30,13 @@ export class ChatLauncherComponent implements OnInit, OnDestroy{
   showChatroom:boolean = false;
 
   ngOnInit(): void {
-    this.getRooms();
     this.chatService.connectToWS();
+    this.http.get(this.serverAddress).subscribe(data => this.rooms = data as []);
   }
 
   ngOnDestroy(): void {
     // const intendedRoute = this.router.url;
     this.chatService.disconnectChatConnection();
-  }
-  
-  async getRooms(){
-    await this.chatService.getAllRooms();
-    this.rooms = this.chatService.rooms;
   }
   
   handleSubmit(event:Event){
