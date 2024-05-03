@@ -12,7 +12,7 @@ const io = require('socket.io')(httpServer, {
 });
 
 //MARK: Import the functions from User
-const { getUser, getAllUsersInRoom, addUser, removeUser, users } = require("./ChatConfig.js")
+const { getUser, getAllUsersInRoom, addUser, removeUser, users, rooms } = require("./ChatConfig.js")
 
 io.on('connection', (socket) => {
     console.log("user connected");
@@ -44,13 +44,21 @@ io.on('connection', (socket) => {
             const user = getUser(socket.id);
             console.log("user::");
             console.log(user);
+            console.log(`~~~!  NOTICE:: ${user.userName} is trying to send message '${msg.msg.content}' to room ${user.roomID}  !~~~~`);
+            console.log(rooms);
+            const roomID = rooms.find(room => room === user.roomID);
             msg._id = randomUUID();
-            io.in(`${user.roomID}`).emit("message", msg);
+            if(roomID){
+                io.in(roomID).emit("message", msg);
+            }
+            else{
+                io.emit("message", `Can't find room`);
+            }
         })
         
         socket.on("disconnect", () => {
             console.log("user disconnected");
-            const user = removeUser(socket._id);
+            const user = removeUser(socket.id);
             if( user ){
                 io.in(user.room).emit("notification", `${user.name} left the channel`);
                 io.in(user.room).emit("users", getAllUsersInRoom(user.room));
@@ -106,6 +114,7 @@ app.get("/getRooms", ( req, res )=>{
             rooms.push(room);
         }
     })
+    console.log("rooms::");
     console.log(rooms);
     res.send(rooms);
 });

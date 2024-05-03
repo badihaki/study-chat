@@ -11,17 +11,19 @@ export class ChatService {
   
   private socket = io("http://localhost:8080");
   private http = inject(HttpClient);
+  rooms:[] = []
   
-  getAllRooms():Subscription{
-    return this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
-      console.log("room data: ");
-      console.log(data);
-      return(data);
+  async getAllRooms(){
+    await this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
+      // console.log("room data: ");
+      // console.log(data);
+      this.rooms = data as [];
     })
   }
 
   connectToRoom( userData: { username:string, roomID:string } ){
     const callback = ( msg:string )=>{
+      console.log("normal if undefined");
       console.log(msg);
     };
     const { username, roomID } = userData;

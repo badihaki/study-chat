@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../_services/chat.service';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { ChatRoomComponent } from '../chat-room/chat-room.component';
   templateUrl: './chat-launcher.component.html',
   styleUrl: './chat-launcher.component.scss'
 })
-export class ChatLauncherComponent{
+export class ChatLauncherComponent implements OnInit{
   constructor(
     private userService:UserService,
     private chatService:ChatService,
@@ -29,13 +29,27 @@ export class ChatLauncherComponent{
   rooms?:any[]
   showChatroom:boolean = false;
   
+  ngOnInit(): void {
+    this.getRooms();
+  }
+  
+  async getRooms(){
+    await this.chatService.getAllRooms();
+    this.rooms = this.chatService.rooms;
+    // console.log(this.chatService.rooms);
+    // console.log(this.rooms);
+  }
+  
   handleSubmit(event:Event){
     event.preventDefault();
     const selection:HTMLSelectElement|null = document.getElementById("chat-join") as HTMLSelectElement;
-    switch(selection.value){
-      case "new":
-        this.handleCreateChat();
+    if(selection.value === "new"){
+      this.handleCreateChat();
     }
+    else{
+      this.handleJoinChat(selection.value);
+    }
+    
   }
 
   handleCreateChat(){
@@ -47,7 +61,13 @@ export class ChatLauncherComponent{
     this.chatService.connectToRoom(userData as {username:string, roomID:string});
     this.showChatroom = true;
   }
-  handleJoinChat(){
-    console.log("joining");
+  handleJoinChat(room:string){
+    console.log(`joining ${room}`);
+    const userData = {
+      username: this.userService.user?.username,
+      roomID: room
+    }
+    this.chatService.connectToRoom(userData as {username:string, roomID:string});
+    this.showChatroom = true;
   }
 }

@@ -1,4 +1,5 @@
 const users = [];
+const rooms = [];
 
 function addUser( socketID, userName, roomID ){
     const user = { socketID, userName, roomID };
@@ -11,7 +12,8 @@ function addUser( socketID, userName, roomID ){
         console.log("added user:");
         console.log(user);
         console.log("full users list");
-        console.log(users);  
+        console.log(users);
+        rooms.push(roomID);
     }
     return {user};
 }
@@ -38,4 +40,4 @@ function removeUser( socketID ){
     }
 }
 
-module.exports = { getUser, getAllUsersInRoom, addUser, removeUser, users };
+module.exports = { getUser, getAllUsersInRoom, addUser, removeUser, users, rooms };
