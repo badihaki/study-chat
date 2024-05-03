@@ -17,20 +17,15 @@ import { ChatMessageComponent } from '../chat-message/chat-message.component';
 })
 export class ChatRoomComponent implements OnInit {
   constructor(
-    private router: Router,
     private userService:UserService,
     private chatService:ChatService,
   ){}
   
     ngOnInit(): void {
-      if(!this.userService.user){
-        this.router.navigate(["/"]);
-      }
-      else{
-        this.chatService.getMessages().subscribe( (msg) => {
-        this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
-        })
-      }
+      this.chatService.getMessages().subscribe( (msg) => {
+        console.log(msg);
+      this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
+    })
     }
 
   messages:{_id:string, msg:{ content:string }, user:string }[] = [];

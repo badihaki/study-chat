@@ -42,13 +42,15 @@ export class ChatService {
   }
 
   sendMessage( messageData:{ msg:string, user:string|undefined } ){
+    // console.log(this.socket);
+    console.log(messageData);
     this.socket.emit(`message`, messageData);
   }
 
   getMessages(){
     let observable = new Observable<{ _id:string, msg:{ content:string }, user:string }>( observer => {
       this.socket.on("message", ( msg ) => {
-        console.log("got new ~ message ~ in chat service!!")
+        console.log("got new ~ message ~ in chat service!!");
         console.log(msg);
         observer.next(msg);
       });

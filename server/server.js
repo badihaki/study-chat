@@ -21,22 +21,41 @@ io.on('connection', (socket) => {
         // console.log("Socket:");
         // console.log(socket);
         const { user, error } = addUser(socket.id, username, roomID);
-        console.log("returned user:");
-        console.log(user);
+        // console.log("returned user:");
+        // console.log(user);
         if(error){
-            console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            // console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             return callback(error.error);
         }
         if(!user){
-            console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            console.log("No user");
+            // console.log("ERROR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            // console.log("No user");
             return;
         }
         socket.join(user.roomID);
-        socket.in(roomID).emit("notification", `${username} just joined the room`);
+        socket.in(`${roomID}`).emit("notification", `${username} just joined the room`);
         io.in(roomID).emit("users", getAllUsersInRoom(roomID));
         callback();
     })
+    
+        socket.on("message", ( msg ) => {
+            console.log("got message");
+            console.log(msg);
+            const user = getUser(socket.id);
+            console.log("user::");
+            console.log(user);
+            msg._id = randomUUID();
+            io.in(`${user.roomID}`).emit("message", msg);
+        })
+        
+        socket.on("disconnect", () => {
+            console.log("user disconnected");
+            const user = removeUser(socket._id);
+            if( user ){
+                io.in(user.room).emit("notification", `${user.name} left the channel`);
+                io.in(user.room).emit("users", getAllUsersInRoom(user.room));
+            }
+        })
 
     // socket.on("getRooms", ()=>{
     //     const rooms = [];
@@ -65,21 +84,6 @@ io.on('connection', (socket) => {
         
     //     io.emit("message", msg);
     // })
-
-    socket.on("message", ( msg ) => {
-        const user = getUser(socket.id);
-        msg._id = randomUUID();
-        io.in(user.room).emit("message", msg);
-    })
-    
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-        const user = removeUser(socket._id);
-        if( user ){
-            io.in(user.room).emit("notification", `${user.name} left the channel`);
-            io.in(user.room).emit("users", getAllUsersInRoom(user.room));
-        }
-    })
 });
 
 //MARK: controller imports
