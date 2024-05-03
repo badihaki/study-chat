@@ -1,4 +1,4 @@
-#content{
+.content{
     position: relative;
 }
 
@@ -6,7 +6,7 @@
     position: sticky;
 
     right: 10%;
-    left: 60%;
+    left: 50%;
     top: 15%;
     height: 90px;
     width: 18.5%;
@@ -30,16 +30,33 @@
 
 .message-panel{
     position: fixed;
-    width: 50rem;
-    height: 50%;
-    top: 15%;
+    width: 35%;
+    height: 25%;
+    top: 35%;
     left: 2%;
-    align-self: center;
 
+    padding: 2rem 1rem 1rem 1rem;
+
+    align-self: center;
+    border-radius: 3rem;
+    
     background-color:lightslategray;
     color: whitesmoke;
 }
 
 .messages{
     position: relative;
+}
+
+.message-form{
+    background-color: lightslategray;
+    color: whitesmoke;
+    border: whitesmoke 5px solid;
+    border-radius: 1.5rem;
+    
+    position: fixed;
+    left: 25%;
+    top: 62%;
+    
+    padding: 1rem 2rem 1rem 2rem;
 }

@@ -22,20 +22,21 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem("sc-token");
-    console.log(token);
+    // console.log(token);
     if(!this.userService.user && token){
       this.http.post(this.serverAddress, {"token":token}).subscribe({
         next: ( res ) => {
-          console.log("your response on load");
+          // console.log("your response on load");
           // console.log(res);
           const {user} = res as {user:User};
           this.userService.setUser(user);
         },
         complete: () => {
-          console.log("completed");
+          // console.log("completed");
         },
         error: ( err ) => {
           console.log(err);
+          this.userService.setUser(null);
         }
       })
     }
