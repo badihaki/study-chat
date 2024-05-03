@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from '../_services/chat.service';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { ChatRoomComponent } from '../chat-room/chat-room.component';
   templateUrl: './chat-launcher.component.html',
   styleUrl: './chat-launcher.component.scss'
 })
-export class ChatLauncherComponent implements OnInit{
+export class ChatLauncherComponent implements OnInit, OnDestroy{
   constructor(
     private userService:UserService,
     private chatService:ChatService,
@@ -31,6 +31,12 @@ export class ChatLauncherComponent implements OnInit{
   
   ngOnInit(): void {
     this.getRooms();
+    this.chatService.connectToWS();
+  }
+
+  ngOnDestroy(): void {
+    // const intendedRoute = this.router.url;
+    this.chatService.disconnectChatConnection();
   }
   
   async getRooms(){

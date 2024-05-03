@@ -15,16 +15,18 @@ export class ChatService {
   
   async getAllRooms(){
     await this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
-      // console.log("room data: ");
-      // console.log(data);
       this.rooms = data as [];
     })
   }
 
+  connectToWS(){
+    this.socket.connect();
+  }
+
   connectToRoom( userData: { username:string, roomID:string } ){
     const callback = ( msg:string )=>{
-      console.log("normal if undefined");
       console.log(msg);
+      console.log("^^ normal if undefined");
     };
     const { username, roomID } = userData;
     this.socket.emit("joinRoom", { username, roomID }, callback );
@@ -44,8 +46,6 @@ export class ChatService {
   }
 
   sendMessage( messageData:{ msg:string, user:string|undefined } ){
-    // console.log(this.socket);
-    console.log(messageData);
     this.socket.emit(`message`, messageData);
   }
 
@@ -62,7 +62,6 @@ export class ChatService {
   }
 
   disconnectChatConnection(){
-    // this.socket.emit("disconnect");
     this.socket.disconnect();
   }
 }

@@ -24,7 +24,6 @@ export class ChatRoomComponent implements OnInit {
   
     ngOnInit(): void {
       this.chatService.getMessages().subscribe( (msg) => {
-        console.log(msg);
       this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
     })
     }
