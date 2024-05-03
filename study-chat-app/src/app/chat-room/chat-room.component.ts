@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ChatMessageComponent
+    ChatMessageComponent,
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss'
 })
 export class ChatRoomComponent implements OnInit {
   constructor(
-    private userService:UserService,
+    public userService:UserService,
     private chatService:ChatService,
   ){}
   
@@ -41,4 +42,5 @@ export class ChatRoomComponent implements OnInit {
       this.messageForm.reset();
     }
   }
+
 }

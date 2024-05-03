@@ -61,4 +61,10 @@ export class ChatLauncherComponent implements OnInit{
     this.chatService.connectToRoom(userData as {username:string, roomID:string});
     this.showChatroom = true;
   }
+
+  handleLeave(){
+    this.chatService.disconnectChatConnection();
+    this.userService.currentChatRoom = undefined;
+    this.showChatroom = false;
+  }
 }
