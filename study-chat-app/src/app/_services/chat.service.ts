@@ -15,6 +15,7 @@ export class ChatService {
   
   async getAllRooms(){
     await this.http.get("http://localhost:8080/getRooms").subscribe(data=>{
+      console.log(data);
       this.rooms = data as [];
     })
   }

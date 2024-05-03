@@ -19,16 +19,16 @@ export class ChatLauncherComponent implements OnInit, OnDestroy{
     private userService:UserService,
     private chatService:ChatService,
     private router:Router,
-    private http:HttpClient
+    private http:HttpClient,
   ){
     if(!this.userService.user){
       this.router.navigate(["/"]);
     }
   }
   serverAddress = "http://localhost:8080/getRooms"
-  rooms?:any[]
+  rooms:any[] = [];
   showChatroom:boolean = false;
-  
+
   ngOnInit(): void {
     this.getRooms();
     this.chatService.connectToWS();
