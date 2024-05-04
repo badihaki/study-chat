@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, inject } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chat-message',
@@ -15,13 +16,16 @@ export class ChatMessageComponent {
   http = inject(HttpClient);
   serverAddress = ""
   userService = inject(UserService);
-  messageSaved:boolean = false;
 
-  saveMessage(){
+  saveMessage(e:Event|null){
     console.log("save msg");
-    this.http.post("localhost:3000/messages", {content:this.message?.msg.content, userEmail: this.userService.user?.email}).subscribe({
-      next: ()=>{
-        this.messageSaved = true;
+    console.log(e);
+    const btn = e?.target as HTMLButtonElement;
+    
+    this.http.post("http://localhost:3000/messages", {content:this.message?.msg.content, userEmail: this.userService.user?.email}).subscribe({
+      next: ( res )=>{
+        btn.disabled = true;
+        console.log(res);
       },
       error: ()=>{},
     });

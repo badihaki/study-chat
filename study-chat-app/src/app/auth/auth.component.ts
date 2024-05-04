@@ -35,6 +35,7 @@ export class AuthComponent implements OnInit {
           // console.log("completed");
         },
         error: ( err ) => {
+          console.log("E R R O R");
           console.log(err);
           this.userService.setUser(null);
         }

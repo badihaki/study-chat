@@ -10,7 +10,7 @@ router.get("/", (req, res) =>{
 router.post("/", (req, res) => {
     console.log("posting a new message to messages");
     console.log(req.body);
-    res.send(`postin`);
+    res.send(JSON.stringify({msg:`postin`}));
 })
 
 router.patch("/:id", ( req, res ) => {

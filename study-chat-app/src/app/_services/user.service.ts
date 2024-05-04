@@ -7,7 +7,6 @@ import User from "../_interfaces/user.js"
 })
 export class UserService {
   constructor() { }
-  http = inject(HttpClient);
   user:User|null = null;
   currentChatRoom:string|undefined = undefined;
 
