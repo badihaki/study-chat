@@ -1,5 +1,5 @@
 const { model, Schema, default: mongoose } = require("mongoose");
-const { messageSchema } = require("./MessageModel");
+// const { messageSchema } = require("./MessageModel");
 
 const userSchema = new Schema({
     username: String,

@@ -8,4 +8,4 @@ const messageSchema = new Schema({
 
 const Message = model("Message", messageSchema);
 
-module.exports = { Message, messageSchema };
+module.exports = Message;

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Message = require("../models/MessageModel");
+const User = require("../models/UserModel");
 
 router.get("/", (req, res) =>{
     console.log("getting messages");
@@ -7,10 +8,28 @@ router.get("/", (req, res) =>{
     res.send(`ok, get msg`);
 })
 
-router.post("/", (req, res) => {
-    console.log("posting a new message to messages");
+router.post("/", async (req, res) => {
+    console.log("saving a new message to messages");
     console.log(req.body);
-    res.send(JSON.stringify({msg:`postin`}));
+    const { content, userEmail } = req.body;
+    let user;
+    try{
+        user = await User.findOne({email:userEmail});
+        const msg = await Message.create({content, keywords:[]});
+        const updatedMessageArr = [...user.savedMessages, msg];
+        const updatedUser = await User.findOneAndUpdate(
+            {email:userEmail},
+            {savedMessages: updatedMessageArr},
+            { // options here
+                returnOriginal:false // make sure we return updated user info
+            }
+        )
+        res.send(JSON.stringify({msg:msg, user:updatedUser}));
+    }
+    catch(err){
+        const error = new Error(err);
+        res.status(400).send(JSON.stringify(error));
+    }
 })
 
 router.patch("/:id", ( req, res ) => {
