@@ -53,15 +53,6 @@ io.on('connection', (socket) => {
             console.log("details below:");
             console.log(details);
         })
-    
-    // let previousID;
-    // const safeJoin = ( currentID ) => {
-    //     socket.leave(previousID);
-    //     socket.join(currentID, () => {
-    //         console.log(`Socket ${socket.id} joined room ${currentID}`);
-    //     })
-    //     previousID = currentID;
-    // }
 });
 
 //MARK: controller imports
@@ -85,8 +76,6 @@ app.get("/getRooms", ( req, res )=>{
             rooms.push(room);
         }
     })
-    // console.log("rooms::");
-    // console.log(rooms);
     res.send(rooms);
 });
 
