@@ -6,5 +6,13 @@
         <li>
             <a routerLink="/chat">Chat</a>
         </li>
+        @if (userServicec.user) {
+            <li>
+                <a routerLink="/messages">{{userServicec.user.username}}'s Messages</a>
+            </li>
+            <li class="logout-btn">
+                <a routerLink="/" (click)="userServicec.logoutUser()">Logout</a>
+            </li>
+        }
     </ul>
 </nav>

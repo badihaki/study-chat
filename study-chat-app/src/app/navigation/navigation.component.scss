@@ -8,18 +8,20 @@
         mask: linear-gradient(90deg, white 70%, transparent);
         -webkit-mask: linear-gradient(90deg, white 70%, transparent);
         overflow: hidden;
-
+        
         position: sticky;
         width: 100%;
+        height: 50px;
         top: 0;
-
+        
         z-index: 1;
-    }
-    ul {
+        overflow-y: scroll;
+      }
+      ul {
         list-style-type: none;
         margin: 0rem 0rem 0rem 0rem;
         padding: 0;
-        overflow: hidden;
+        position: relative;
       }
       
       li {
@@ -40,4 +42,23 @@
         color: snow;
         border-radius: 2rem;
         background-color: rgb(94, 65, 183);
+      }
+      
+      li.logout-btn{
+        position: relative;
+        right: 50%;
+        left: 10%;
+      }
+      
+      li.logout-btn a {
+        background-color: white;
+        border-radius: 0.5rem;
+        color: rgb(147, 61, 223);
+        font-weight: 600;
+        transition: ease-in-out 550ms;
+      }
+      li.logout-btn a:hover {
+        background-color: rgb(178, 110, 238);
+        color: white;
+        border-radius: 3rem;
       }

@@ -17,8 +17,9 @@ export class UserService {
   getUser(){
     return this.user;
   }
-  removeUser(){
-    console.log("removing user");
+  logoutUser(){
+    console.log("loggin' user OUT!!");
+    localStorage.removeItem("sc-token");
     this.user = null;
   }
 }

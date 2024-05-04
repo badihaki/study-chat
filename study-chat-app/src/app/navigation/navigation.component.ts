@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,5 +12,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent {
-
+  userServicec:UserService = inject(UserService);
 }
