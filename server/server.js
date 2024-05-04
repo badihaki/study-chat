@@ -66,6 +66,7 @@ io.on('connection', (socket) => {
 
 //MARK: controller imports
 const authController = require("./controllers/AuthController.js");
+const messageController = require("./controllers/MessageController.js");
 const { randomUUID } = require("crypto");
 // const chatController = require("./controllers/ChatController.js");
 
@@ -76,6 +77,7 @@ app.use(cors());
 
 //MARK: Routes
 app.use("/auth", authController);
+app.use("/messages", messageController);
 app.get("/getRooms", ( req, res )=>{
     const rooms = [];
     users.map(user => user.roomID).forEach( room => {
