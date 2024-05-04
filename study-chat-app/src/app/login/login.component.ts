@@ -44,7 +44,6 @@ export class LoginComponent {
     if(this.loginForm.valid){
       this.http.post(this.serverAddress, this.loginForm.value).subscribe({
         next: (res)=>{
-          console.log(res);
           const { user, token } = res as {user:{}, token:string};
           localStorage.setItem("sc-token", token);
           this.userService.setUser(user as User);
@@ -58,7 +57,6 @@ export class LoginComponent {
           }, 5000);
         },
         complete: ()=>{
-          console.log("complete, do stuff");
         }
       })
     }

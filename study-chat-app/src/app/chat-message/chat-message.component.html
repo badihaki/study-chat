@@ -5,4 +5,5 @@
     <p>
         {{ message?.msg?.content }}
     </p>
+    <button (click)="saveMessage()" [disabled]="messageSaved" >Save Message</button>
 </div>
