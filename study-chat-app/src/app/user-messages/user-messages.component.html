@@ -1,4 +1,15 @@
 <h2>
     Saved Messages for {{userService.user?.username}}
 </h2>
-<button (click)="getUseInfor()">User</button>
+<p>
+    Check below to see your saved messages!!
+</p>
+<div class="message-list">
+    <ul>
+        @for (msg of userMessages; track msg._id) {
+            <li>
+                <app-message-card [message]="msg" />
+            </li>
+        }
+    </ul>
+</div>

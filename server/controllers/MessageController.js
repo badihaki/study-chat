@@ -1,11 +1,16 @@
 const router = require("express").Router();
+const { json } = require("express");
 const Message = require("../models/MessageModel");
 const User = require("../models/UserModel");
 
-router.get("/", (req, res) =>{
-    console.log("getting messages");
-    console.log(req.body);
-    res.send(`ok, get msg`);
+router.post("/:id", async (req, res) =>{
+    const messages = [];
+    for(const msgID of req.body){
+        messages.push(await Message.findById(msgID));
+    }
+    console.log("messages!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(messages);
+    res.send(JSON.stringify({messages}));
 })
 
 router.post("/", async (req, res) => {

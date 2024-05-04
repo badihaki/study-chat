@@ -1,0 +1,19 @@
+<div class="message-card" [id]="message?._id">
+    <p>{{message?.content}}</p>
+    <button (click)="setShowForm()">
+        @if (isShowingForm) {
+            Hide Form
+        }
+        @else {
+            Show Form
+        }
+    </button>
+    <form [class]="showEditForm" [formGroup]="editForm" (ngSubmit)="handleEditFormSubmnit()">
+        <label for="edit">You can edit the content of</label>
+        <input id="edit" formControlName="content" />
+        @if (editForm.valid) {
+            <br />
+            <button type="submit">Submit</button>
+        }
+    </form>
+</div>
