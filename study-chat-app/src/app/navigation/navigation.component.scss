@@ -1,5 +1,5 @@
     nav{
-        background-color: rgb(178, 110, 238);
+        background-color: rgba(198, 140, 249, 0.723);
         border-radius: 2rem;
         color: whitesmoke;
         font-size: larger;
@@ -16,7 +16,13 @@
         
         z-index: 1;
         overflow-y: scroll;
+        transition: ease-in-out 453ms;
       }
+
+      nav:hover{
+        background-color: rgb(178, 110, 238);
+      }
+
       ul {
         list-style-type: none;
         margin: 0rem 0rem 0rem 0rem;

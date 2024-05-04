@@ -1,4 +1,46 @@
+#home{
+    position: absolute;
+}
+
 span.user{
-    color: rgb(128, 29, 221);
+    color: slateblue;
     font-weight: bolder;
+}
+
+p{
+    position: relative;
+    background-color: rgba(178, 110, 238, 0.7225);
+    margin-top: 3.2rem;
+    padding: 1rem 1rem 1rem 1rem;
+    width: 575px;
+    left: 20vw;
+    
+    border-radius: 2rem;
+    color: whitesmoke;
+    transition: ease-in-out 856ms;
+}
+p:hover{
+    background-color: rgb(178, 110, 238);
+}
+
+.tooltip{
+    color: rebeccapurple;
+    font-weight: bolder;
+    word-spacing: 3px;
+    letter-spacing: 1px;
+}
+
+a{
+    color: whitesmoke;
+    transition: ease-in-out 355ms;
+    text-decoration: none;
+    border-radius: 0rem;
+    padding: 0px 5px 0px 5px;
+}
+
+a:hover{
+    color: rgb(178, 110, 238);;
+    background-color: whitesmoke;
+    border-radius: 3rem;
+    padding: 3px 5.2px 3px 5.2px;
 }

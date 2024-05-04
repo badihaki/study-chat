@@ -1,2 +1,14 @@
-<h1>Study and Chat</h1>
-<h2 id="subtitle">Welcome <span class="user">{{userService.user?.username}}</span>, glad to have you back</h2>
+<div id="home">
+    <h1>Study and Chat</h1>
+    <h2 id="subtitle">Welcome <span class="user">{{userService.user?.username}}</span>, glad to have you back</h2>
+    <br />
+    <p>
+        Welcome back! You can use the navigation bar <span class="tooltip">ABOVE</span> to navigate through the features of the app, or feel free to return to this page to help decide what tools you'd like to use.
+    </p>
+    <p>
+        If you want to start a chat, go to <a routerLink="/chat"><span class="tooltip">'CHAT'</span></a>. There, you will have a drop down menu to select from chatrooms that are already in session, or you can start your own chat session. Messages can be saved to your personal stash of messages.
+    </p>
+    <p>
+        Speaking of <a routerLink="/messages"><span class="tooltip">'MESSAGES'</span></a>, select that to see your stash of messages. These can be searched through, edited, and given keywords to make it easier to look up a group of them.
+    </p>
+</div>
