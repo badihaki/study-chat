@@ -1,3 +1,16 @@
+.message-list{
+    position: absolute;
+    // overflow: hidden;
+    height: 60vh;
+    width: 50vw;
+    overflow-y: scroll;
+}
+
+.message-list > ul{
+    height: fit-content;
+    position: relative;
+}
+
 .message-list > ul > li{
     list-style: none;
 }

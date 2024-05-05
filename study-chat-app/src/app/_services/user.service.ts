@@ -17,6 +17,9 @@ export class UserService {
   getUser(){
     return this.user;
   }
+  addToSavedMessages(message:{content:string, keywords:string[]}){
+    this.user?.savedMessages.push(message);
+  }
   logoutUser(){
     console.log("loggin' user OUT!!");
     localStorage.removeItem("sc-token");

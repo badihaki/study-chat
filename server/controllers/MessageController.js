@@ -59,12 +59,13 @@ router.delete("/:id", async ( req, res ) => {
         const updatedMessageArr = await messages.filter( (msg) => msg.id !== deletedMsg.id )
         console.log("this is the new list:");
         console.log(updatedMessageArr);
-        await User.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
             user._id,
             {savedMessages: updatedMessageArr},
+            {returnOriginal: false}
         )
         await Message.findByIdAndDelete(req.params.id);
-        res.status(200).send(JSON.stringify(req.params.id));
+        res.status(200).send(JSON.stringify({user:updatedUser}));
     }
     catch(err){
         const error = new Error(err);

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../_services/user.service';
+import User from '../_interfaces/user';
 
 @Component({
   selector: 'app-message-card',
@@ -56,14 +57,6 @@ export class MessageCardComponent {
       this.editForm.reset();
       this.setShowForm();
     }
-    /*
-    TODO: use ID to send to server
-    Edit on server, return to client
-    Use return data to change user's savedMessages array
-    - import userService
-    - use array.proto.findIndex( {callback funct} )
-    - replace content of original with new stuff from server
-    */
   }
   
 handleDeleteButton(){
@@ -72,8 +65,13 @@ handleDeleteButton(){
     {userID: this.userService.user?._id}
   }).subscribe( {
     next: (res) => {
-      const msgID = res as string;
-      document.getElementById(msgID)?.remove();
+      const response = res as {
+        user:User
+      };
+      if(this.message){
+        document.getElementById(this.message?._id)?.remove();
+      }
+      this.userService.setUser(response.user);
     },
     error: (err)=> {
       if(err){

@@ -5,6 +5,6 @@ export default interface User {
     password: string,
     savedMessages: {
         content: string,
-        keywords: [string],
+        keywords: string[],
     }[]
 }
