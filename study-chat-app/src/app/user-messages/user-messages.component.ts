@@ -21,7 +21,6 @@ export class UserMessagesComponent implements OnInit {
   userMessages:{content:string, _id:string}[]|null = null;
 
   ngOnInit(): void {
-    // console.log(this.userService.user?._id);
     if(!this.userService.user){
       this.router.navigate(["/"]);
     }
@@ -30,13 +29,8 @@ export class UserMessagesComponent implements OnInit {
         next: (res) => {
           const parsedRes = res as {messages:[]};
           this.userMessages = parsedRes.messages;
-          console.log(this.userMessages);
         }
       })
     }
-  }
-
-  getUseInfor(){
-    console.log(this.userService.user);
   }
 }

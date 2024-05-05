@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-message-card',
@@ -14,6 +15,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class MessageCardComponent {
   @Input() message?:{content:string, _id:string}
   http:HttpClient = inject(HttpClient);
+  userService:UserService = inject(UserService);
   serverAddress:string = "http://localhost:3000/messages";
   isShowingForm:boolean = false;
   showEditForm:string = "edit-form--hide"
@@ -36,20 +38,24 @@ export class MessageCardComponent {
 
   handleEditFormSubmnit(){
     if(this.editForm.valid){
-      // console.log(this.editForm.value);
-      // console.log(this.message?._id);
-
       this.http.patch(`${this.serverAddress}/${this.message?._id}`, this.editForm.value).subscribe({
         next: ( res ) => {
-          console.log(res);
+          const updatedMsg = res as {
+            _id: string,
+            content: string,
+            keywords: string[]
+          };
+          this.message = updatedMsg;
         },
         error: ( err ) => {
           if(err){
             console.log(err);
           }
-        },
-        complete: () => {}
+        }
       })
+      this.editForm.reset();
+      this.setShowForm();
+    }
       
       /*
         TODO: use ID to send to server
@@ -59,6 +65,5 @@ export class MessageCardComponent {
           - use array.proto.findIndex( {callback funct} )
           - replace content of original with new stuff from server
       */
-    }
   }
 }
