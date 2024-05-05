@@ -1,0 +1,23 @@
+.auth{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+.authorization{
+    position: relative;
+    left: 5rem;
+}
+.instructions{
+    position: relative;
+    right: 5rem;
+    top: 35vh;
+    height: 10%;
+    
+    align-content: center;
+
+    background-color: white;
+    border-radius: 3rem;
+    
+    color: rebeccapurple;
+    font-weight: bolder;
+}

@@ -10,7 +10,8 @@
         overflow: hidden;
         
         position: sticky;
-        width: 100%;
+        width: 50vw;
+        left: 22vw;
         height: 50px;
         top: 0;
         
@@ -26,6 +27,7 @@
       ul {
         list-style-type: none;
         margin: 0rem 0rem 0rem 0rem;
+        left: 4vw;
         padding: 0;
         position: relative;
       }
@@ -48,12 +50,6 @@
         color: snow;
         border-radius: 2rem;
         background-color: rgb(94, 65, 183);
-      }
-      
-      li.logout-btn{
-        position: relative;
-        right: 50%;
-        left: 10%;
       }
       
       li.logout-btn a {
