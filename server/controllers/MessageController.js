@@ -37,10 +37,15 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.patch("/:id", ( req, res ) => {
+router.patch("/:id", async ( req, res ) => {
     console.log(`updating message`);
-    console.log(req.params);
-    res.send("update")
+    console.log(req.params.id);
+    console.log(req.body);
+    const msg = await Message.findByIdAndUpdate(req.params.id, {content: req.body.content},{
+        returnOriginal: false
+    })
+    console.log(msg);
+    res.send(JSON.stringify(msg));
 })
 
 router.delete("/:id", ( req, res ) => {

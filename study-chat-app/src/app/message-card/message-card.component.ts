@@ -39,7 +39,7 @@ export class MessageCardComponent {
       // console.log(this.editForm.value);
       // console.log(this.message?._id);
 
-      this.http.patch(`${this.serverAddress}/${this.message?._id}`, this.editForm.value.content).subscribe({
+      this.http.patch(`${this.serverAddress}/${this.message?._id}`, this.editForm.value).subscribe({
         next: ( res ) => {
           console.log(res);
         },
