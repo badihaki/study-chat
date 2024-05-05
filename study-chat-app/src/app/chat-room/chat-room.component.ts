@@ -22,9 +22,17 @@ export class ChatRoomComponent implements OnInit {
     private chatService:ChatService,
   ){}
   
+  panel:HTMLElement|null = null;
+
     ngOnInit(): void {
+      this.panel = document.getElementById("message-panel");
       this.chatService.getMessages().subscribe( (msg) => {
-      this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
+        this.messages.push(msg as {_id:string, msg:{ content:string }, user:string });
+        setTimeout(() => {
+          if(this.panel){
+            this.panel.scrollTop = this.panel.scrollHeight;
+          }
+        }, 150);
     })
     }
 

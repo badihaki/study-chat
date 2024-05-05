@@ -4,7 +4,8 @@
 
 .chat__sidebar{
     position: sticky;
-
+    overflow-y: scroll;
+    
     right: 10%;
     left: 50%;
     top: 15%;
@@ -30,13 +31,15 @@
 
 .message-panel{
     position: fixed;
+    overflow-y: scroll;
+    
     width: 35%;
     height: 25%;
     top: 35%;
     left: 2%;
-
+    
     padding: 2rem 1rem 1rem 1rem;
-
+    
     align-self: center;
     border-radius: 3rem;
     
