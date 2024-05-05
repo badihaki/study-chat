@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { json } = require("express");
 const Message = require("../models/MessageModel");
 const User = require("../models/UserModel");
 
@@ -48,9 +47,29 @@ router.patch("/:id", async ( req, res ) => {
     res.send(JSON.stringify(msg));
 })
 
-router.delete("/:id", ( req, res ) => {
+router.delete("/:id", async ( req, res ) => {
     console.log(`deleting message ${req.params.id}`);
-    res.send("Deleted");
+    try{
+        const user = await User.findById(req.body.userID);
+        const deletedMsg = await Message.findById(req.params.id);
+        const messages = [];
+        for(const message of user.savedMessages){
+            messages.push(await Message.findById(message));
+        }
+        const updatedMessageArr = await messages.filter( (msg) => msg.id !== deletedMsg.id )
+        console.log("this is the new list:");
+        console.log(updatedMessageArr);
+        await User.findByIdAndUpdate(
+            user._id,
+            {savedMessages: updatedMessageArr},
+        )
+        await Message.findByIdAndDelete(req.params.id);
+        res.status(200).send(JSON.stringify(req.params.id));
+    }
+    catch(err){
+        const error = new Error(err);
+        res.status(400).send(JSON.stringify(error));
+    }
 })
 
 module.exports = router;

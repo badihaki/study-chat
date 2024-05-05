@@ -56,14 +56,32 @@ export class MessageCardComponent {
       this.editForm.reset();
       this.setShowForm();
     }
-      
-      /*
-        TODO: use ID to send to server
-        Edit on server, return to client
-        Use return data to change user's savedMessages array
-          - import userService
-          - use array.proto.findIndex( {callback funct} )
-          - replace content of original with new stuff from server
-      */
+    /*
+    TODO: use ID to send to server
+    Edit on server, return to client
+    Use return data to change user's savedMessages array
+    - import userService
+    - use array.proto.findIndex( {callback funct} )
+    - replace content of original with new stuff from server
+    */
   }
+  
+handleDeleteButton(){
+  this.http.delete(`${this.serverAddress}/${this.message?._id}`, {
+    body:
+    {userID: this.userService.user?._id}
+  }).subscribe( {
+    next: (res) => {
+      const msgID = res as string;
+      document.getElementById(msgID)?.remove();
+    },
+    error: (err)=> {
+      if(err){
+        console.log(err);
+      }
+    }
+  }
+)
+}
+  
 }

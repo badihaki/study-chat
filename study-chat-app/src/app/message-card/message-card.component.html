@@ -8,6 +8,7 @@
             Show Form
         }
     </button>
+    <button (click)="handleDeleteButton()" >Delete</button>
     <form [class]="showEditForm" [formGroup]="editForm" (ngSubmit)="handleEditFormSubmnit()">
         <label for="edit">You can edit the content of</label>
         <input id="edit" formControlName="content" />
